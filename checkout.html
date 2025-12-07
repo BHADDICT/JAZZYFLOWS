@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="icon" type="image/png" href="./img/jzz.png" />
+    <title>JAZZYFLOWS</title>
+    <style>
+          * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    overflow-x: hidden;
+}
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            background: #1a1a1a;
+            padding: 30px;
+            color: #fff;
+        }
+
+        .back-btn {
+            color: #ffd700;
+            font-style: italic;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .cart-item {
+            border: 2px solid #444;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: #2a2a2a;
+            border-radius: 5px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-details h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .item-details p {
+            font-size: 14px;
+            color: #aaa;
+            margin: 4px 0;
+        }
+
+        .item-badge {
+            display: inline-block;
+            background: transparent;
+            border: 1.5px solid #FFD700;
+            color: #FFD700;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        .add-more {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid #444;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .add-more:hover {
+            background: #333;
+        }
+
+        .pricing {
+            background: #3a2020;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            color: #fff;
+        }
+
+        .total-row {
+            border-top: 2px solid #666;
+            margin-top: 10px;
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .right-panel {
+            padding: 30px;
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        .payment-method {
+            margin: 20px 0;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .qr-container {
+           border: 1px solid #444;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-code {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-section {
+            margin: 20px 0;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 12px;
+            background: #444;
+            border: 1px solid #666;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .upload-btn:hover {
+            background: #555;
+        }
+
+        .confirm-btn {
+            width: 80%;
+            padding: 15px;
+            align-items: center;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover {
+            background: #777;
+        }
+
+        .upload-info {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="back-btn" onclick="goBack()">Back</div>
+            
+            <div id="cartItems"></div>
+            
+            <button class="add-more" onclick="addMore()">+</button>
+            
+            <div class="pricing">
+                <div class="pricing-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="pricing-row">
+                    <span>Shipping</span>
+                    <span id="shipping">$2.00</span>
+                </div>
+                <div class="pricing-row total-row">
+                    <span>Total</span>
+                    <span id="total">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <h2>Contact</h2>
+            <div class="form-group">
+                <input type="email" id="gmail" placeholder="Your email" required>
+            </div>
+
+            <h2>Delivery</h2>
+            <div class="form-group">
+                <input type="text" placeholder="Full Name" id="fullName">
+            </div>
+            <div class="form-group">
+                <input type="tel" placeholder="Phone number" id="phone">
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Address" id="address">
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="Google map link (optional)" id="mapLink">
+            </div>
+
+            <h2>Payment</h2>
+            <div class="payment-method">
+                <div class="radio-group">
+                    <input type="radio" id="paid" name="payment" value="Paid" checked>
+                    <label for="paid">Paid</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="cash" name="payment" value="Cash">
+                    <label for="cash">Cash</label>
+                </div>
+            </div>
+
+            <div class="qr-container">
+                <div class="qr-code">
+                    <img src="./img/aba.png" alt="QR Code" style="width: 100%; height: 100%;">
+                </div>
+            </div>
+
+            <div class="upload-section">
+                <h2>Upload transactions image</h2>
+                <p class="upload-info">After "paid", please screenshot and upload it by click the "Upload" button below</p>
+                <input type="file" id="fileInput" style="display: none;" accept="image/*">
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Upload 📤</button>
+                <p id="fileName" style="color: #aaa; margin-top: 10px; font-size: 12px;"></p>
+            </div>
+
+            <img src="./img/order.png" 
+                 class="confirm-btn" id="confirmBtn" 
+                 onclick="confirmOrder()" 
+                 alt="Confirm Order" 
+                 style="display: block; 
+                        margin: 0 auto; 
+                        width: 300px; 
+                        height: auto;">
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+(function(){
+   emailjs.init("OfyP9DFeQYXEUmxkp");
+})();
+
+const confirmBtn = document.getElementById('confirmBtn');
+const fileInput = document.getElementById('fileInput');
+
+// Load cart data
+function loadCartData() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartItemsContainer = document.getElementById('cartItems');
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="color: #aaa;">Your cart is empty</p>';
+        updatePricing(0);
+        return;
+    }
+
+    let subtotal = 0;
+    cartItemsContainer.innerHTML = '';
+
+    cart.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'cart-item';
+        itemDiv.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="item-image">
+            <div class="item-details">
+                <h3>${item.name}</h3>
+                <div>
+                    <span class="item-badge">SIZE ${item.size || 'L'}</span>
+                    <span class="item-badge">${item.gender || 'Unisex'}</span>
+                </div>
+                <p>Quantity: ${item.quantity || 1}</p>
+                <p style="color: #fff; font-weight: bold;">$${item.price.toFixed(2)}</p>
+            </div>
+        `;
+        cartItemsContainer.appendChild(itemDiv);
+        subtotal += item.price * (item.quantity || 1);
+    });
+
+    updatePricing(subtotal);
+}
+
+// Update pricing
+function updatePricing(subtotal) {
+    const shipping = 2.00;
+    const total = subtotal + shipping;
+    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+}
+
+// Form validation
+function checkForm() {
+    const gmail = document.getElementById('gmail').value.trim();
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
+
+    if (gmail && fullName && phone && address) {
+        if (paymentMethod === 'Paid' && !fileInput.files.length) {
+            confirmBtn.src = './img/order.png';
+            return false;
+        }
+        confirmBtn.src = './img/order1.png';
+        return true;
+    } else {
+        confirmBtn.src = './img/order.png';
+        return false;
+    }
+}
+
+// Ultra-aggressive image compression to stay under 50KB total limit
+function compressImage(file, maxWidth = 300, quality = 0.3) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onerror = () => reject(new Error('Failed to read file'));
+
+        reader.onload = (e) => {
+            const img = new Image();
+
+            img.onerror = () => reject(new Error('Failed to load image'));
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+
+                if (width > maxWidth) {
+                    height = (height * maxWidth) / width;
+                    width = maxWidth;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, width, height);
+                ctx.drawImage(img, 0, 0, width, height);
+
+                function compressLoop(currentQuality) {
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', currentQuality);
+                    const compressedSizeKB = (compressedBase64.length * 0.75) / 1024;
+                    
+                    console.log(`Quality: ${currentQuality.toFixed(2)}, Size: ${compressedSizeKB.toFixed(2)}KB`);
+
+                    if (compressedSizeKB > 25 && currentQuality > 0.05) {
+                        compressLoop(currentQuality - 0.05);
+                    } else {
+                        console.log(`Final compressed size: ${compressedSizeKB.toFixed(2)}KB`);
+                        resolve(compressedBase64);
+                    }
+                }
+
+                compressLoop(quality);
+            };
+
+            img.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+// Confirm order
+function confirmOrder() {
+    if (!checkForm()) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    confirmBtn.style.opacity = '0.5';
+    confirmBtn.style.cursor = 'not-allowed';
+
+    const gmail = document.getElementById('gmail').value.trim();
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const mapLink = document.getElementById('mapLink').value.trim();
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const file = fileInput.files[0];
+
+    function sendEmail(base64Image) {
+        // Create order table HTML with gender column
+        let cartHTML = `
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; font-family: Arial; font-size:14px;">
+    <tr style="background:#f2f2f2;">
+        <th>Product</th>
+        <th>Size</th>
+        <th>Shape</th>
+        <th>Qty</th>
+        <th>Price</th>
+    </tr>
+`;
+
+        cart.forEach(item => {
+            cartHTML += `
+    <tr>
+        <td>${item.name}</td>
+        <td>${item.size || 'N/A'}</td>
+        <td>${item.gender || 'Unisex'}</td>
+        <td>${item.quantity}</td>
+        <td>$${item.price.toFixed(2)}</td>
+    </tr>
+    `;
+        });
+
+        cartHTML += `</table>`;
+
+        const templateParams = {
+            gmail: gmail,
+            fullName: fullName,
+            phone: phone,
+            address: address,
+            mapLink: mapLink || "No map link",
+            paymentMethod: paymentMethod,
+            cartDetails: cartHTML,
+            uploadedImage: base64Image
+        };
+
+        const approxSize = JSON.stringify(templateParams).length / 1024;
+        console.log(`Approximate total payload size: ${approxSize.toFixed(2)}KB`);
+
+        emailjs.send("service_2qufntk", "template_y26rk46", templateParams)
+            .then(() => {
+                console.log("Email sent successfully!");
+
+                const orderData = {
+                    gmail,
+                    fullName,
+                    phone,
+                    address,
+                    mapLink,
+                    paymentMethod,
+                    cart,
+                    orderDate: new Date().toISOString()
+                };
+                const orders = JSON.parse(localStorage.getItem('orders')) || [];
+                orders.push(orderData);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                localStorage.removeItem('cart');
+
+                confirmBtn.style.opacity = '1';
+                confirmBtn.style.cursor = 'pointer';
+
+                showThankYouPopup();
+            })
+            .catch(error => {
+                console.error("Email error:", error);
+                
+                confirmBtn.style.opacity = '1';
+                confirmBtn.style.cursor = 'pointer';
+                
+                alert("Failed to send email. Please check your internet connection and try again.\n\nError: " + (error.text || error.message));
+            });
+    }
+
+    if (file) {
+        console.log('Processing uploaded image...');
+        
+        compressImage(file, 300, 0.3)
+            .then(compressedBase64 => {
+                console.log('Image compressed successfully');
+                sendEmail(compressedBase64);
+            })
+            .catch(error => {
+                console.error('Image compression error:', error);
+                
+                confirmBtn.style.opacity = '1';
+                confirmBtn.style.cursor = 'pointer';
+                
+                alert('Failed to process image. Please try a smaller image or different format.');
+            });
+    } else {
+        sendEmail("");
+    }
+}
+
+fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const fileSizeKB = file.size / 1024;
+        const fileSizeMB = fileSizeKB / 1024;
+        
+        if (fileSizeMB > 5) {
+            alert('Image is too large. Please select an image smaller than 5MB.');
+            fileInput.value = '';
+            document.getElementById('fileName').textContent = '';
+            checkForm();
+            return;
+        }
+        
+        document.getElementById('fileName').textContent = `Selected: ${file.name} (${fileSizeMB.toFixed(2)}MB)`;
+    } else {
+        document.getElementById('fileName').textContent = '';
+    }
+    checkForm();
+});
+
+document.querySelectorAll('#gmail, #fullName, #phone, #address, #mapLink')
+    .forEach(input => input.addEventListener('input', checkForm));
+
+document.querySelectorAll('input[name="payment"]')
+    .forEach(radio => radio.addEventListener('change', checkForm));
+
+function goBack() {
+    window.history.back();
+}
+
+function addMore() {
+    window.location.href = 'index.html';
+}
+
+function showThankYouPopup() {
+    const popup = document.createElement('div');
+    popup.style.position = 'fixed';
+    popup.style.top = 0;
+    popup.style.left = 0;
+    popup.style.width = '100%';
+    popup.style.height = '100%';
+    popup.style.background = 'rgba(0,0,0,0.8)';
+    popup.style.display = 'flex';
+    popup.style.flexDirection = 'column';
+    popup.style.justifyContent = 'center';
+    popup.style.alignItems = 'center';
+    popup.style.zIndex = 9999;
+
+    popup.innerHTML = `
+        <div style="position: relative; text-align: center;">
+            <img src="./img/thankyou.png" style="max-width: 500px; width: 90%; display: block; margin: 0 auto; border-radius: 20px; box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 10px 40px rgba(0, 0, 0, 0.5);">
+            
+            <div style="margin-top: 30px;">
+                <img src="./img/check1.png"
+                     onclick="window.location.href='index.html'"
+                     style="max-width: 400px; width: 80%; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 10px;"
+                     onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(255, 215, 0, 0.5)'"
+                     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+            </div>
+
+            <div style="background: rgba(255, 215, 0, 0.1); border: 2px solid rgba(255, 215, 0, 0.3); 
+                        border-radius: 10px; padding: 15px; margin-top: 30px; max-width: 500px; width: 90%; margin-left: auto; margin-right: auto;">
+                <p style="color: white; font-family: Arial, sans-serif; font-size: 16px; margin: 0;">
+                    <strong>Receiver:</strong> VANNAK MONIREACH
+                </p>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+}
+
+loadCartData();
+checkForm();
+</script>
+
+</body>
+</html>

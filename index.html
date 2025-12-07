@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./img/jzz.png" />
+    <meta name="description" content="Jazzyflows is a premier Cambodian clothing brand dedicated to defining modern elegance and luxury in fashion." />
+    <title>JAZZYFLOWS</title>
+    <style>
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    overflow-x: hidden;
+}
+
+.container {
+    min-height: 100vh;
+    background-image: url('./img/top1.JPG');
+    background-position: center;
+    background-color: #1a1410;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 20px;
+}
+
+.marble-ceiling {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-image: url('./img/top.JPG');
+    background-position: center;
+    background-color: #2a2419;
+}
+
+.display-wall {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 80px;
+    z-index: 2;
+}
+
+.side-column {
+    position: absolute;
+    width: 80px;
+    height: 110%;
+    background-size: 20px 100%;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    top: 5px;
+    bottom: 5px;
+}
+
+.side-column.left { left: 0; }
+.side-column.right { right: 0; }
+
+.collections {
+    margin: 0 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+.collection-item {
+    position: relative;
+    background-image: url('./img/cabinet1.png');
+    background-size: cover;
+    background-position: center;
+    background-color: #2a2419;
+    border: 4px solid #8b6f47;
+    padding: 60px 40px;
+    box-shadow: 
+        inset 0 0 60px rgba(218, 165, 32, 0.3),
+        0 10px 40px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    top: 40px;
+    text-align: center;
+  
+}
+
+.collection-item:hover { transform: scale(1.02); }
+
+.collection-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px solid rgba(218, 165, 32, 0.6);
+    border-radius: 4px;
+    margin: 8px;
+    pointer-events: none;
+}
+.nav-button {
+    position: absolute;
+    left: 10px;      /* inside container left */
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.nav-button.up {
+    top: 10px;       /* TOP LEFT */
+}
+
+.nav-button.down {
+    bottom: 10px;    /* BOTTOM LEFT */
+}
+
+.nav-icon {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+.nav-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.8);
+}
+/* Move left one slightly left */
+.mannequin:first-child {
+    transform: translateX(-15px);
+}
+
+/* Move right one slightly right */
+.mannequin:last-child {
+    transform: translateX(15px);
+}
+
+.glow-effect {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, 
+        rgba(218, 165, 32, 0.4) 0%,
+        rgba(218, 165, 32, 0.2) 50%,
+        rgba(218, 165, 32, 0.4) 100%
+    );
+    pointer-events: none;
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.collection-label img {
+    width: 180px;
+    height: auto;
+    display: block;
+    margin: 6px auto 0;
+}
+
+.mannequin-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0px;
+    height: 280px;
+}
+
+.mannequin {
+    width: 160px;
+    height: 280px;
+    background-size: 150%; /* increase image size */
+    background-repeat: no-repeat;
+    background-position: bottom;
+    margin: 0;
+    position: relative;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+
+
+.logo {
+    width: 920px;
+    height: auto;
+    margin-top: 220px;
+    display: block;
+    z-index: 2;
+    position: relative;    
+}
+
+.character {
+    position: absolute;
+    bottom: 90px;
+    right: 30%;
+    width: 250px;
+    height: 300px;
+    background-image: url('./img/character.PNG');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    z-index: 1;
+    animation: float 2s ease-in-out infinite;
+}
+
+.speech-bubble {
+    position: absolute;
+    bottom: 390px;
+    right: 22%;
+    width: 260px;
+    height: 120px;
+    background-image: url('./img/bubble2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    font-style: italic;
+    color: #000;
+    z-index: 5;
+    animation: bubbleSwap 6s ease-in-out infinite;
+}
+
+@keyframes bubbleSwap {
+    0%, 50% { background-image: url('./img/bubble2.png'); }
+    100% { background-image: url('./img/bubble.png'); }
+}
+
+.floor-glow {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent 0%, rgba(218, 165, 32, 0.3) 100%);
+    pointer-events: none;
+}
+
+.collection-item[style*="background-image"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(212, 175, 55, 0.3);
+    border-top-color: #d4af37;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* MOBILE RESPONSIVE STYLES */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px 10px 20px;
+    }
+
+    .marble-ceiling {
+        height: 100px;
+    }
+
+    .display-wall {
+        margin-top: 40px;
+        max-width: 100%;
+    }
+
+    .side-column {
+        width: 30px;
+    }
+
+    .collections {
+        margin: 0 30px;
+    }
+
+    .collection-item {
+        padding: 30px 15px;
+        top: 20px;
+        
+    }
+
+    .mannequin-row {
+        gap: 0px;
+        height: 180px;
+        flex-wrap: wrap;
+    }
+
+    .mannequin {
+        width: 80px;
+        height: 150px;
+    }
+
+    /* Adjust specific mannequin margins for mobile */
+    .collection-item:first-child .mannequin:first-of-type {
+        margin-right: 15px !important;
+        margin-bottom: -30px !important;
+    }
+
+    .collection-item:first-child .mannequin:last-of-type {
+        margin-left: 100px !important;
+        margin-bottom: -30px !important;
+    }
+
+    .collection-item:nth-child(2) .mannequin,
+    .collection-item:last-child .mannequin {
+        margin-bottom: -30px !important;
+    }
+
+   .collection-label img {
+    width: 80px;
+    position: relative; /* required for z-index to take effect */
+    z-index: 3;
+}
+
+
+    .nav-button {
+        width: 90px;
+        height: 90px;
+        left: 10px;
+    }
+
+    .nav-button.up { top: 30px; }
+    .nav-button.down { bottom: 30px; }
+
+
+    .logo {
+        width: 100%;
+        max-width: 350px;
+        margin-top: 100px;
+    }
+
+    .character {
+        width: 180px;
+        height: 150px;
+        bottom: 60px;
+        right: 25%;
+        z-index: 2;
+    }
+
+    .speech-bubble {
+        width: 170px;
+        height: 70px;
+        bottom: 210px;
+        right: 8%;
+        font-size: 14px;
+    }
+
+    .floor-glow {
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 15px 5px 15px;
+    }
+
+    .side-column {
+        width: 20px;
+    }
+
+    .collections {
+        margin: 0 20px;
+    }
+
+    .collection-item {
+        padding: 20px 10px;
+        border: 2px solid #8b6f47;
+    }
+
+    .mannequin-row {
+        height: 140px;
+    }
+
+    .mannequin {
+        width: 90px;
+        height: 110px;
+    }
+
+    .collection-item:first-child .mannequin:first-of-type {
+        margin-right: 10px !important;
+        margin-bottom: -50px !important;
+    }
+
+    .collection-item:first-child .mannequin:last-of-type {
+        margin-left: 60px !important;
+        margin-bottom: -50px !important;
+    }
+
+    .collection-item:nth-child(2) .mannequin,
+    .collection-item:last-child .mannequin {
+        margin-bottom: -50px !important;
+        
+    }
+
+    .collection-label img {
+        width: 110px;
+        z-index: 3;
+    }
+
+    .nav-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .logo {
+        max-width: 280px;
+        margin-top: 60px;
+    }
+
+    .character {
+        width: 90px;
+        height: 110px;
+        bottom: 40px;
+    }
+
+    .speech-bubble {
+        width: 110px;
+        height: 55px;
+        bottom: 150px;
+        font-size: 11px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="marble-ceiling"></div>
+
+        <div class="display-wall">
+            <img class="side-column left" src="./imgg/wall.png" alt="Left side image">
+            <img class="side-column right" src="./imgg/wall1.png" alt="Right side image">
+
+            <div class="collections">
+ <div class="collection-item">
+                    <div class="mannequin-row">
+
+                     <div class="nav-button up" onclick="scrollPage('up')">
+
+    <img class="nav-icon" src="./imgg/up.PNG" alt="Up">
+</div>
+
+                        <div class="mannequin" 
+                             style="
+                                background-image: url('./img/iron1.png'); 
+                                margin-right: 30px;
+                                background-size: 95%;
+                                margin-bottom:-50px;
+                             " href="collection1.html">
+                        </div>
+
+                   <div class="mannequin" 
+                             style="
+                                background-image: url('./img/iron.png'); 
+                                margin-right: 30px;
+                                background-size: 95%;
+                                margin-bottom:-20px;
+                             ">
+                        </div>
+
+                    </div>
+
+                   <div class="collection-label">
+    <a href="spider.html">
+        <img src="./img/colection.PNG" alt="Collection 3">
+    </a>
+</div>
+
+                </div>
+                <!-- COLLECTION 3 + UP BUTTON -->
+                <div class="collection-item">
+                    <div class="mannequin-row">
+
+                       
+                        <div class="mannequin" 
+                             style="
+                                background-image: url('./imgg/c3blue.png'); 
+                                margin-right: 30px;
+                                background-size: 120%;
+                                margin-bottom:-50px;
+                             " href="collection1.html">
+                        </div>
+
+                   <div class="mannequin" 
+                             style="
+                                background-image: url('./imgg/c3black\ \(1\).png'); 
+                                margin-right: 30px;
+                                background-size: 120%;
+                                margin-bottom:-50px;
+                             ">
+                        </div>
+
+                    </div>
+
+                   <div class="collection-label">
+    <a href="collection3.html">
+        <img src="./imgg/label3.png" alt="Collection 3">
+    </a>
+</div>
+
+                </div>
+
+                <!-- COLLECTION 2 -->
+                <div class="collection-item">
+                    <div class="mannequin-row">
+
+                        <div class="mannequin" style="background-image: url('./img/c2.png'); 
+                              margin-bottom: -50px;   margin: right -10px; background-size: 95%;"></div>
+                        <div class="mannequin" style="background-image: url('./img/c21.png'); 
+                                margin-bottom: -50px; background-size: 95%;"></div>
+                        <div class="mannequin" style="background-image: url('./img/c22.png'); 
+                              margin-bottom: -50px; background-size: 95%;"></div>
+
+                    </div>
+
+                  <div class="collection-label">
+    <a href="collection2.html">
+        <img src="./imgg/label1.png" alt="Collection 3">
+    </a>
+</div>
+
+                </div>
+
+                <!-- COLLECTION 1 + DOWN BUTTON -->
+                <div class="collection-item">
+                    <div class="mannequin-row">
+
+                   <div class="mannequin" style="background-image: url('./img/c1.png'); 
+                          margin-bottom: -60px; background-size: 95%;">
+</div>
+
+<div class="nav-button down" onclick="scrollPage('down')">
+
+    <img class="nav-icon" src="./imgg/down.PNG" alt="Down">
+</div>
+
+                    </div>
+
+                   <div class="collection-label">
+    <a href="collection1.html">
+        <img src="./imgg/label.png" alt="Collection 3">
+    </a>
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="speech-bubble"></div>
+        <div class="character"></div>
+
+        <div class="floor-glow"></div>
+        
+        <div class="footer">
+            <img class="logo" src="./imgg/table.PNG" alt="Logo">
+        </div>
+    </div>
+<script>
+function scrollPage(direction) {
+    if (direction === 'up') {
+        // UP button moves to BOTTOM
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    } else if (direction === 'down') {
+        // DOWN button moves to TOP
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}
+</script>
+
+
+    <script>
+        // Navigation button handlers
+        document.querySelector('.nav-button.up').addEventListener('click', () => {
+            window.scrollBy({ top: -300, behavior: 'smooth' });
+        });
+        
+        document.querySelector('.nav-button.down').addEventListener('click', () => {
+            window.scrollBy({ top: 300, behavior: 'smooth' });
+        });
+
+        // Collection items can be clickable - add your navigation logic here
+        const collections = document.querySelectorAll('.collection-item');
+        collections.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                console.log(`Collection ${3 - index} clicked`);
+                // Example: window.location.href = `collection${3-index}.html`;
+            });
+        });
+
+        // Animate speech bubble entrance
+        const bubble = document.querySelector('.speech-bubble');
+        setTimeout(() => {
+            bubble.style.opacity = '0';
+            bubble.style.transform = 'scale(0.8)';
+            bubble.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+                bubble.style.opacity = '1';
+                bubble.style.transform = 'scale(1)';
+            }, 100);
+        }, 500);
+
+        // Optional: Handle image loading errors
+        document.querySelectorAll('.mannequin, .character, .logo').forEach(el => {
+            el.addEventListener('error', function() {
+                this.style.opacity = '0.5';
+                console.warn('Image failed to load:', this);
+            });
+        });
+    </script>
+</body>
+</html>
