@@ -18,6 +18,10 @@ body {
   overflow-x: hidden;
   color: white;
 }
+.sold-out {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
 /* === MAIN CONTAINER === */
 .container {
@@ -1163,7 +1167,6 @@ Gently wash only"
       <span>jazzyflows.jz</span>
     </div>
   </div>
-
 <script>
 let currentOpenSizeSelector = null;
 let currentOpenGenderSelector = null;
@@ -1172,6 +1175,12 @@ let selectedGenders = {};
 let cart = [];
 let productItems = document.querySelectorAll('.product-item');
 let currentIndex = 0;
+
+// === Define sold-out sizes per product & gender ===
+const soldOutSizes = {
+  "1": { "Female": ["S", "M", "L"], "Male": ["L"] }
+  // Add more products if needed
+};
 
 // === Size Selector ===
 function toggleSizeOptions(button) {
@@ -1188,6 +1197,8 @@ function toggleSizeOptions(button) {
 }
 
 function selectSize(button, productId) {
+  if (button.disabled) return; // Prevent selecting sold-out
+
   const optionsContainer = button.parentElement;
   const buttons = optionsContainer.querySelectorAll('.size-btn');
 
@@ -1255,6 +1266,28 @@ function selectGender(button, productId) {
   mainButton.style.borderRadius = "8px";
 
   console.log(`Product ${productId} selected gender: ${selectedGenders[productId]}`);
+
+  // ==========================
+  // APPLY SOLD-OUT LOGIC
+  // ==========================
+  const product = document.querySelector(`.product-item[data-product-id="${productId}"]`);
+  const sizeButtons = product.querySelectorAll(".size-options .size-btn");
+  const gender = selectedGenders[productId];
+  const soldSizes = (soldOutSizes[productId] && soldOutSizes[productId][gender]) || [];
+
+  sizeButtons.forEach(btn => {
+    const size = btn.getAttribute("data-size");
+    if (soldSizes.includes(size)) {
+      btn.disabled = true;
+      btn.classList.add("sold-out");
+      btn.classList.remove("selected");
+      btn.style.border = "2px solid transparent";
+      btn.style.boxShadow = "none";
+    } else {
+      btn.disabled = false;
+      btn.classList.remove("sold-out");
+    }
+  });
 }
 
 // Close dropdowns when clicking outside
@@ -1292,12 +1325,12 @@ function addToCart(productId) {
 
   const size = selectedSizes[productId];
   const gender = selectedGenders[productId];
-  
+
   if (!size) {
     alert("⚠️ Please select a size before adding to cart!");
     return;
   }
-  
+
   if (!gender) {
     alert("⚠️ Please select a gender before adding to cart!");
     return;
@@ -1384,7 +1417,7 @@ function renderCart() {
   const total = subtotal + delivery;
 
   cartCount.textContent = totalItems;
-  
+
   const totalSection = document.querySelector('.cart-total');
   if (totalSection) {
     totalSection.innerHTML = `
@@ -1395,7 +1428,7 @@ function renderCart() {
       </div>
     `;
   }
-  
+
   if (checkoutBtn) checkoutBtn.disabled = false;
 }
 
@@ -1423,7 +1456,7 @@ function showProduct(index) {
       const productId = item.getAttribute('data-product-id');
       const sizeButtons = item.querySelectorAll('.size-btn');
       const genderButtons = item.querySelectorAll('.gender-btn');
-      
+
       sizeButtons.forEach(btn => btn.classList.remove('selected'));
       genderButtons.forEach(btn => btn.classList.remove('selected'));
 
